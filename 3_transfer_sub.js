@@ -1,8 +1,8 @@
 require("dotenv").config();
 const axios = require("axios");
 const querystring = require("querystring");
-const getAccessToken = require("./2_access_token"); // access_token 가져오기
-const generateClientSecret = require("./1_client_secret"); // client_secret 가져오기
+const getAccessToken = require("./2_access_token");
+const generateClientSecret = require("./1_client_secret");
 
 const requestUserMigrationInfo = async (sub, recipientTeamId) => {
   try {
@@ -50,6 +50,6 @@ const requestUserMigrationInfo = async (sub, recipientTeamId) => {
 };
 
 // 함수 실행 예시
-const sub = "001313.abc8e9c4508b467db189cd0c3e11e9a4.0417"; // Apple 계정의 고유 식별자
+const sub = "001658.f891545478a533443e6c483a25f03759.0722"; // Apple 계정의 고유 식별자
 const recipientTeamId = process.env.RECIPIENT_TEAM_ID; // 변경 팀 ID
 requestUserMigrationInfo(sub, recipientTeamId);

@@ -1,10 +1,10 @@
 require("dotenv").config();
 const axios = require("axios");
 const querystring = require("querystring");
-const getAccessToken = require("./2_access_token"); // access_token 가져오기
-const generateClientSecret = require("./1_client_secret"); // client_secret 가져오기
+const getAccessToken = require("./2_access_token");
+const generateClientSecret = require("./1_client_secret");
 
-const requestTransferMigrationInfo = async (transferSub) => {
+const requestUserMigrationInfo = async (sub, recipientTeamId) => {
   try {
     const accessToken = await getAccessToken(); // access_token 요청
     const clientSecret = generateClientSecret(); // client_secret 요청
@@ -19,7 +19,8 @@ const requestTransferMigrationInfo = async (transferSub) => {
     const clientId = process.env.CLIENT_ID;
 
     const data = querystring.stringify({
-      transfer_sub: transferSub,
+      sub: sub,
+      target: recipientTeamId,
       client_id: clientId,
       client_secret: clientSecret,
     });
@@ -36,18 +37,19 @@ const requestTransferMigrationInfo = async (transferSub) => {
     );
 
     console.log(
-      "🚀 transfer_migration_info.js ~ requestTransferMigrationInfo ~ response.data:",
+      "🚀 usermigration_info.js ~ requestUserMigrationInfo ~ response.data:",
       response.data
     );
     return response.data;
   } catch (error) {
     console.error(
-      "❌ transfer_migration_info.js ~ requestTransferMigrationInfo ~ error:",
+      "❌ usermigration_info.js ~ requestUserMigrationInfo ~ error:",
       error.response ? error.response.data : error.message
     );
   }
 };
 
 // 함수 실행 예시
-const transferSub = "001313.rcd5d2de6e3b44bc7ace55e7a2a521725"; // 이전 Apple 계정의 정보 식별자
-requestTransferMigrationInfo(transferSub);
+const sub = "001658.478a533443e6c483a25f03759f891545.0722"; // Apple 계정의 고유 식별자
+const recipientTeamId = process.env.RECIPIENT_TEAM_ID; // 변경 팀 ID
+requestUserMigrationInfo(sub, recipientTeamId);

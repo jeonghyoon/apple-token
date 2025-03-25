@@ -3,11 +3,14 @@ const axios = require("axios");
 const querystring = require("querystring");
 const generateClientSecret = require("./1_client_secret"); // client_secret 가져오기
 
-const clientId = process.env.CLIENT_ID;
-
-const getAccessToken = async () => {
+const getAccessToken = async (
+  teamId = process.env.TEAM_ID,
+  clientId = process.env.CLIENT_ID,
+  keyId = process.env.KEY_ID,
+  keyFile = process.env.KEY_FILE
+) => {
   try {
-    const clientSecret = generateClientSecret(); // client_secret 요청
+    const clientSecret = generateClientSecret(teamId, clientId, keyId, keyFile); // client_secret 요청
 
     const response = await axios.post(
       "https://appleid.apple.com/auth/token",
@@ -38,5 +41,7 @@ const getAccessToken = async () => {
   }
 };
 
-// ✅ 함수 내보내기
+const accessToken = getAccessToken();
+console.log("🚀 client_secret.js ~ accessToken:", accessToken);
+
 module.exports = getAccessToken;
