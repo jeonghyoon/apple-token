@@ -47,7 +47,7 @@
      { "transfer_sub": "417607.e68ba878e1be1652bbf12acbcd492d8a.1827" }
      ```
 
-## 이관 중
+## 이관 후
 
 **4. new_sub 조회**
 
